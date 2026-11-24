@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1512">
+  <meta name="description" content="用單車踏頻控制探險者，穿越叢林、吊橋與火炬神殿，完成兩公里的 3D 跑酷。">
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <link rel="preload" href="./art/gate.webp" as="image">
+  <title>遺跡疾行 · Relic Run</title>
+</head>
+<body data-view="home">
+  <div id="world" aria-hidden="true"></div>
+  <div id="cover" aria-hidden="true"></div>
+  <div class="screen-shade" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="wordmark"><img src="./mark.svg" alt="" width="39" height="39"><span>RELIC RUN</span></div>
+    <nav aria-label="遊戲工具">
+      <button class="guide-link" id="guide" type="button" aria-label="玩法指南"><i data-icon="book"></i><span>玩法指南</span></button>
+      <span class="tool-divider"></span>
+      <button class="icon-button" id="sound" aria-label="開啟音效" aria-pressed="false" title="開啟音效"><i data-icon="mute"></i></button>
+      <button class="icon-button" id="fullscreen" aria-label="進入全螢幕" title="進入全螢幕"><i data-icon="expand"></i></button>
+      <button class="icon-button" id="settings" aria-label="遊戲設定" title="遊戲設定"><i data-icon="settings"></i></button>
+    </nav>
+  </header>
+  <main id="home">
+    <section class="hero" aria-labelledby="game-name">
+      <div class="eyebrow"><span class="rule"></span>單車互動冒險 <span class="micro-diamond"></span> CYCLING ADVENTURE</div>
+      <h1 id="game-name">遺跡疾行</h1>
+      <div class="english-title" lang="en">RELIC RUN</div>
+      <p class="lede">踩動單車，逃出失落的神廟。<br>用你的踏頻跨越斷橋、滑過倒木，甩開身後的守衛。</p>
+      <div class="actions">
+        <button type="button" class="button primary" id="connect"><i data-icon="bluetooth"></i>連接單車</button>
+        <button type="button" class="button secondary" id="demo"><i data-icon="play"></i>模擬試玩</button>
+      </div>
+    </section>
+    <section class="route" aria-labelledby="route-heading">
+      <div class="section-head"><div class="route-title"><i data-icon="route"></i><h2 id="route-heading">探險路線</h2><span lang="en">THE ROUTE</span></div><p>3 個區域<span class="dot">·</span>全程 <strong>2.0</strong> km</p></div>
+      <div class="chapter-grid">
+        <button class="chapter-card" data-chapter="0" aria-label="查看第一章 苔石古道">
+          <span class="card-content"><span class="card-index">CHAPTER 01</span><strong>苔石古道</strong><span class="card-range">0 — 600 m</span></span><i data-icon="chevron"></i>
+        </button>
+        <button class="chapter-card" data-chapter="1" aria-label="查看第二章 峽谷吊橋">
+          <span class="card-content"><span class="card-index">CHAPTER 02</span><strong>峽谷吊橋</strong><span class="card-range">600 — 1,300 m</span></span><i data-icon="chevron"></i>
+        </button>
+        <button class="chapter-card" data-chapter="2" aria-label="查看第三章 火炬神殿">
+          <span class="card-content"><span class="card-index">CHAPTER 03</span><strong>火炬神殿</strong><span class="card-range">1,300 — 2,000 m</span></span><i data-icon="chevron"></i>
+        </button>
+      </div>
+    </section>
+  </main>
+  <footer id="foot"><span><b class="status-light"></b>單車尚未連接</span><span><i data-icon="bluetooth"></i>RehabWebBLE v1</span></footer>
+  <section id="ride" hidden aria-label="跑酷介面">
+    <div class="hud-top">
+      <div class="hud-chapter"><span id="hud-kicker" class="eyebrow">CHAPTER 01</span><strong id="hud-name">苔石古道</strong><span id="hud-mode"></span></div>
+      <div class="hud-progress"><span><b id="distance">0</b> / 2,000 m</span><div class="track"><div id="progress"></div></div></div>
+      <button class="icon-button hud-pause" id="pause" aria-label="暫停遊戲" title="暫停遊戲"><i data-icon="pause"></i></button>
+    </div>
+    <div id="cue" hidden><i id="cue-symbol" data-icon="jump"></i><div><strong id="cue-title"></strong><span id="cue-caption"></span></div></div>
+    <div class="hud-bottom">
+      <div class="ride-stats"><span><i data-icon="gauge"></i><b id="rpm">—</b> RPM</span><span>遊戲時速 <b id="speed">0</b> km/h</span><span><i data-icon="gem"></i><b id="relics">0</b> 遺物</span><span><b id="run-score">0</b> 分</span></div>
+      <div class="demo-controller" id="demo-controller" hidden><label for="rpm-control">模擬踏頻 <output id="rpm-value">60 RPM</output></label><input id="rpm-control" type="range" min="0" max="140" value="60" step="1" aria-label="模擬踏頻"></div>
+    </div>
+  </section>
+  <section id="session-panel" class="session-layer" hidden aria-labelledby="session-title">
+    <div class="panel session-card"><div class="panel-kicker" id="session-kicker"></div><h2 id="session-title" tabindex="-1"></h2><p class="panel-copy" id="session-detail" role="status"></p>
+      <div id="results" class="result-grid" hidden></div>
+      <div class="panel-actions"><button id="begin" class="button primary"></button><button id="readonly" class="button secondary" hidden>唯讀遊玩</button><button id="reconnect" class="button secondary" hidden>重新連線</button><button id="home-button" class="text-button">返回首頁</button></div>
+    </div>
+  </section>
+  <dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-body"><button class="icon-button close" id="dialog-close" aria-label="關閉視窗"><i data-icon="close"></i></button><div id="dialog-content"></div></div></dialog>
+  <div id="toast" role="status" hidden></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
